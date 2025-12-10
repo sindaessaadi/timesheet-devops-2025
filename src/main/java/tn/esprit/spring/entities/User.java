@@ -31,8 +31,8 @@ public class User implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	private Date dateNaissance;
-	//test
-	//alltest
+
+	
 	@Enumerated(EnumType.STRING)
 	Role role; 
 	

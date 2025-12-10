@@ -23,19 +23,19 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id;   
-	
-	private String firstName; 
-	
+	private String id;
+
+	private String firstName;
+
 	private String lastName;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date dateNaissance;
 
-	
+
 	@Enumerated(EnumType.STRING)
-	Role role; 
-	
+	Role role;
+
 	public User() {	}
 
 	public User(String firstName, String lastName, Date dateNaissance, Role role) {
@@ -47,7 +47,7 @@ public class User implements Serializable {
 	}
 
 
-	public User(Long id, String firstName, String lastName, Date dateNaissance, Role role) {
+	public User(String id, String firstName, String lastName, Date dateNaissance, Role role) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -64,11 +64,18 @@ public class User implements Serializable {
 	}
 
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -89,6 +96,6 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
+
 
 }

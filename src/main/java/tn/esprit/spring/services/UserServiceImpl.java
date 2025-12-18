@@ -16,80 +16,78 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	UserRepository userRepository;
 
-
-
 	private static final Logger l = LogManager.getLogger(UserServiceImpl.class);
 
 	@Override
-	public List<User> retrieveAllUsers() { 
-
-		return null;
+	public List<User> retrieveAllUsers() {
+		l.info("Retrieving all users");
+		List<User> users = userRepository.findAll();
+		l.debug("Number of users retrieved: {}", users.size());
+		return users;
 	}
-
 
 	@Override
 	public User addUser(User u) {
+		l.info("Adding a new user");
+		l.debug("User details: {}", u);
 
-		User utilisateur = null; 
+		User utilisateur = null;
 
 		try {
-			// TODO Log à ajouter en début de la méthode 
-			utilisateur = userRepository.save(u); 
-			// TODO Log à ajouter à la fin de la méthode 
-
+			utilisateur = userRepository.save(u);
+			l.info("User added successfully with id {}", utilisateur.getId());
 		} catch (Exception e) {
-			// TODO log ici : l....("error in addUser() : " + e);
+			l.error("Error in addUser()", e);
 		}
 
-		return utilisateur; 
+		return utilisateur;
 	}
 
-	@Override 
+	@Override
 	public User updateUser(User u) {
+		l.info("Updating user");
+		l.debug("User details: {}", u);
 
-		User userUpdated = null; 
-		User u_saved = null; 
+		User userUpdated = null;
 
-		
 		try {
-			// TODO Log à ajouter en début de la méthode 
-			userUpdated = userRepository.save(u); 
-			// TODO Log à ajouter à la fin de la méthode 
-
+			userUpdated = userRepository.save(u);
+			l.info("User updated successfully with id {}", userUpdated.getId());
 		} catch (Exception e) {
-			// TODO log ici : l....("error in updateUser() : " + e);
+			l.error("Error in updateUser()", e);
 		}
 
-		return userUpdated; 
+		return userUpdated;
 	}
 
 	@Override
 	public void deleteUser(String id) {
+		l.info("Deleting user with id {}", id);
 
 		try {
-			// TODO Log à ajouter en début de la méthode 
-			userRepository.deleteById(Long.parseLong(id)); 
-			// TODO Log à ajouter à la fin de la méthode 
-
+			userRepository.deleteById(Long.parseLong(id));
+			l.info("User deleted successfully with id {}", id);
 		} catch (Exception e) {
-			// TODO log ici : l....("error in deleteUser() : " + e);
+			l.error("Error in deleteUser()", e);
 		}
-
 	}
 
 	@Override
 	public User retrieveUser(String id) {
+		l.info("Retrieving user with id {}", id);
 		User u = null;
-		try {
-			u =  userRepository.findById(Long.parseLong(id)).get();
 
+		try {
+			u = userRepository.findById(Long.parseLong(id)).orElse(null);
+			if (u == null) {
+				l.warn("User not found with id {}", id);
+			} else {
+				l.debug("User found: {}", u);
+			}
 		} catch (Exception e) {
+			l.error("Error in retrieveUser()", e);
 		}
 
 		return u;
 	}
-
-	
-	
-	
 }
